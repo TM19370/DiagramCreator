@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
     <Grid>
-        <Image x:Name="img" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ScrollViewer>
+            <Image x:Name="img" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </ScrollViewer>
     </Grid>
 </Window>

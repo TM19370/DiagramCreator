@@ -66,7 +66,7 @@ namespace DiagramCreator
 
         public double function(double x)
         {
-            return (0) * -1;//в круглые скобки написать формулу
+            return (Math.Tan(x)) * -1;//в круглые скобки написать формулу
         }
     }
 }
