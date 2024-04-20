@@ -29,9 +29,6 @@ namespace DiagramCreator
             double thickness = 0.1;
             Brush brush = Brushes.Red;
 
-            double startX = -20;
-            double endX = 20;
-
             double step = 0.05;
 
             int width = 50;
@@ -54,7 +51,7 @@ namespace DiagramCreator
                         new Point(width, height / 2)
                         );
 
-                for (double x = startX; x < endX; x += step)
+                for (double x = -(width / 2); x < width / 2; x += step)
                 {
                     drawingContext.DrawLine(
                         new Pen(brush, thickness),
@@ -69,7 +66,7 @@ namespace DiagramCreator
 
         public double function(double x)
         {
-            return Math.Sin(x);
+            return (0) * -1;//в круглые скобки написать формулу
         }
     }
 }
