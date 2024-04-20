@@ -34,6 +34,8 @@ namespace DiagramCreator
             int width = 50;
             int height = 50;
 
+            double dashHeight = 0.1;
+
             BitmapSource bitmapSource = BitmapSource.Create(width, height, 96, 96, PixelFormats.Pbgra32, null, new byte[256 * 256 * 4], 256 * 4);
             var visual = new DrawingVisual();
             using (DrawingContext drawingContext = visual.RenderOpen())
@@ -51,6 +53,20 @@ namespace DiagramCreator
                         new Point(width, height / 2)
                         );
 
+                for (int i = 0; i < width; i++)
+                {
+                    drawingContext.DrawLine(
+                        new Pen(Brushes.Black, thickness),
+                        new Point(i , height / 2 + dashHeight),
+                        new Point(i , height / 2 - dashHeight)
+                        );
+                    drawingContext.DrawLine(
+                        new Pen(Brushes.Black, thickness),
+                        new Point(width / 2 + dashHeight, i),
+                        new Point(width / 2 - dashHeight, i)
+                        );
+                }
+
                 for (double x = -(width / 2); x < width / 2; x += step)
                 {
                     drawingContext.DrawLine(
@@ -66,7 +82,7 @@ namespace DiagramCreator
 
         public double function(double x)
         {
-            return (Math.Tan(x)) * -1;//в круглые скобки написать формулу
+            return (Math.Sin(x)) * -1;//в круглые скобки написать формулу
         }
     }
 }
