@@ -69,11 +69,20 @@ namespace DiagramCreator
 
                 for (double x = -(width / 2); x < width / 2; x += step)
                 {
-                    drawingContext.DrawLine(
-                        new Pen(brush, thickness),
-                        new Point(x + width / 2, height / 2 + function(x)),
-                        new Point(x + step + width / 2, height / 2 + function(x + step))
-                        );
+                    double x1 = x + width / 2;
+                    double x2 = x + step + width / 2;
+
+                    double y1 = height / 2 + function(x);
+                    double y2 = height / 2 + function(x + step);
+
+                    if(y1 < height / 2 || y1 > -height / 2 || y2 < height / 2 || y2 > -height / 2)
+                    {
+                        drawingContext.DrawLine(
+                            new Pen(brush, thickness),
+                            new Point(x1, y1),
+                            new Point(x2, y2)
+                            );
+                    }
                 }
             }
             var image = new DrawingImage(visual.Drawing);
