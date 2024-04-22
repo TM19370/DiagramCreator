@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -57,6 +58,14 @@ namespace DiagramCreator
 
                 for (int i = 0; i < width; i++) // разметка
                 {
+                    drawingContext.DrawText(
+                        new FormattedText((-width / 2 + i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), 0.3, markColor),
+                        new Point(i, height / 2 + 0.1 + markThickness) 
+                        );
+                    drawingContext.DrawText(
+                        new FormattedText((height / 2 - i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), 0.3, markColor),
+                        new Point(width / 2 + 0.1 + markThickness, i)
+                        );
                     drawingContext.DrawLine(
                         new Pen(markColor, markThickness),
                         new Point(i , height / 2 + dashHeight),
@@ -144,7 +153,7 @@ namespace DiagramCreator
 
         public double function(double x)
         {
-            return (Math.Tan(x)) * -1; //в круглые скобки написать формулу
+            return (Math.Sin(x)) * -1; //в круглые скобки написать формулу
         }
     }
 }
