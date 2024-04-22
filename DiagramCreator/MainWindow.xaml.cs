@@ -26,17 +26,16 @@ namespace DiagramCreator
         public MainWindow()
         {
             InitializeComponent();
-
+            
             double thickness = 0.1;
             Brush brush = Brushes.Red;
             Brush markColor = Brushes.Black;
+            Brush backgroungMarksColor = Brushes.LightGray;
+            double fontSize = 0.4;
             double markThickness = 0.1;
-
-            double step = 0.05;
-
+            double calculationStep = 0.05;
             int width = 50;
             int height = 50;
-
             double dashHeight = 0.1;
 
             BitmapSource bitmapSource = BitmapSource.Create(width, height, 96, 96, PixelFormats.Pbgra32, null, new byte[256 * 256 * 4], 256 * 4);
@@ -48,22 +47,22 @@ namespace DiagramCreator
                 for (int i = 0; i < width; i++) // разметка
                 {
                     drawingContext.DrawLine(
-                        new Pen(Brushes.LightGray, markThickness / 2),
+                        new Pen(backgroungMarksColor, markThickness / 2),
                         new Point(i, 0),
                         new Point(i, height)
                         );
                     drawingContext.DrawLine(
-                        new Pen(Brushes.LightGray, markThickness / 2),
+                        new Pen(backgroungMarksColor, markThickness / 2),
                         new Point(0, i),
                         new Point(width, i)
                         );
 
                     drawingContext.DrawText(
-                        new FormattedText((-width / 2 + i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), 0.3, markColor),
+                        new FormattedText((-width / 2 + i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), fontSize, markColor),
                         new Point(i, height / 2 + 0.1 + markThickness) 
                         );
                     drawingContext.DrawText(
-                        new FormattedText((height / 2 - i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), 0.3, markColor),
+                        new FormattedText((height / 2 - i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), fontSize, markColor),
                         new Point(width / 2 + 0.1 + markThickness, i)
                         );
                     drawingContext.DrawLine(
@@ -89,13 +88,13 @@ namespace DiagramCreator
                         new Point(width, height / 2)
                         ); // Ox
 
-                for (double x = -(width / 2); x < width / 2; x += step)
+                for (double x = -(width / 2); x < width / 2; x += calculationStep)
                 {
                     double x1 = x + width / 2;
-                    double x2 = x + step + width / 2;
+                    double x2 = x + calculationStep + width / 2;
 
                     double y1 = height / 2 + function(x);
-                    double y2 = height / 2 + function(x + step);
+                    double y2 = height / 2 + function(x + calculationStep);
                     /*
                     if(y1 > height)
                     {
