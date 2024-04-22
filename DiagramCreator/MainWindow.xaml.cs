@@ -28,6 +28,8 @@ namespace DiagramCreator
 
             double thickness = 0.1;
             Brush brush = Brushes.Red;
+            Brush markColor = Brushes.Black;
+            double markThickness = 0.1;
 
             double step = 0.05;
 
@@ -42,26 +44,26 @@ namespace DiagramCreator
             {
                 drawingContext.DrawImage(bitmapSource, new Rect(0, 0, width, height));
 
-                drawingContext.DrawLine(
-                        new Pen(Brushes.Black, 0.1),
+                drawingContext.DrawLine( 
+                        new Pen(markColor, markThickness),
                         new Point(width / 2, 0),
                         new Point(width / 2, height)
-                        );
+                        ); // Oy
                 drawingContext.DrawLine(
-                        new Pen(Brushes.Black, 0.1),
+                        new Pen(markColor, markThickness),
                         new Point(0, height / 2),
                         new Point(width, height / 2)
-                        );
+                        ); // Ox
 
-                for (int i = 0; i < width; i++)
+                for (int i = 0; i < width; i++) // разметка
                 {
                     drawingContext.DrawLine(
-                        new Pen(Brushes.Black, thickness),
+                        new Pen(markColor, markThickness),
                         new Point(i , height / 2 + dashHeight),
                         new Point(i , height / 2 - dashHeight)
                         );
                     drawingContext.DrawLine(
-                        new Pen(Brushes.Black, thickness),
+                        new Pen(markColor, markThickness),
                         new Point(width / 2 + dashHeight, i),
                         new Point(width / 2 - dashHeight, i)
                         );
@@ -74,8 +76,59 @@ namespace DiagramCreator
 
                     double y1 = height / 2 + function(x);
                     double y2 = height / 2 + function(x + step);
-
-                    if(y1 < height / 2 || y1 > -height / 2 || y2 < height / 2 || y2 > -height / 2)
+                    /*
+                    if(y1 > height)
+                    {
+                        y1 = height;
+                    }
+                    if (y2 > height)
+                    {
+                        y2 = height;
+                    }
+                    if(y1 < 0)
+                    {
+                        y1 = 0;
+                    }
+                    if(y2 < 0)
+                    { 
+                        y2 = 0; 
+                    }
+                    */
+                    /*
+                    if(y1 < height && y2 > height)
+                    {
+                        drawingContext.DrawLine(
+                            new Pen(brush, thickness),
+                            new Point(x1, y1),
+                            new Point(x2, height)
+                            );
+                    }
+                    else if (y1 > height && y2 < height)
+                    {
+                        drawingContext.DrawLine(
+                            new Pen(brush, thickness),
+                            new Point(x1, height),
+                            new Point(x2, y2)
+                            );
+                    }
+                    else if (y1 < 0 && y2 > 0)
+                    {
+                        drawingContext.DrawLine(
+                            new Pen(brush, thickness),
+                            new Point(x1, 0),
+                            new Point(x2, y2)
+                            );
+                    }
+                    else if (y1 > 0 && y2 < 0)
+                    {
+                        drawingContext.DrawLine(
+                            new Pen(brush, thickness),
+                            new Point(x1, y1),
+                            new Point(x2, 0)
+                            );
+                    }
+                    else */
+                    if (y1 <= height && y1 >= 0 && y2 <= height && y2 >= 0)
                     {
                         drawingContext.DrawLine(
                             new Pen(brush, thickness),
@@ -91,7 +144,7 @@ namespace DiagramCreator
 
         public double function(double x)
         {
-            return (Math.Sin(x)) * -1;//в круглые скобки написать формулу
+            return (Math.Tan(x)) * -1; //в круглые скобки написать формулу
         }
     }
 }
