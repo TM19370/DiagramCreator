@@ -44,20 +44,20 @@ namespace DiagramCreator
             using (DrawingContext drawingContext = visual.RenderOpen())
             {
                 drawingContext.DrawImage(bitmapSource, new Rect(0, 0, width, height));
-
-                drawingContext.DrawLine( 
-                        new Pen(markColor, markThickness),
-                        new Point(width / 2, 0),
-                        new Point(width / 2, height)
-                        ); // Oy
-                drawingContext.DrawLine(
-                        new Pen(markColor, markThickness),
-                        new Point(0, height / 2),
-                        new Point(width, height / 2)
-                        ); // Ox
-
+                                
                 for (int i = 0; i < width; i++) // разметка
                 {
+                    drawingContext.DrawLine(
+                        new Pen(Brushes.LightGray, markThickness / 2),
+                        new Point(i, 0),
+                        new Point(i, height)
+                        );
+                    drawingContext.DrawLine(
+                        new Pen(Brushes.LightGray, markThickness / 2),
+                        new Point(0, i),
+                        new Point(width, i)
+                        );
+
                     drawingContext.DrawText(
                         new FormattedText((-width / 2 + i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), 0.3, markColor),
                         new Point(i, height / 2 + 0.1 + markThickness) 
@@ -77,6 +77,17 @@ namespace DiagramCreator
                         new Point(width / 2 - dashHeight, i)
                         );
                 }
+
+                drawingContext.DrawLine(
+                        new Pen(markColor, markThickness),
+                        new Point(width / 2, 0),
+                        new Point(width / 2, height)
+                        ); // Oy
+                drawingContext.DrawLine(
+                        new Pen(markColor, markThickness),
+                        new Point(0, height / 2),
+                        new Point(width, height / 2)
+                        ); // Ox
 
                 for (double x = -(width / 2); x < width / 2; x += step)
                 {
