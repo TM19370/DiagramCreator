@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Math;
 
 namespace DiagramCreator
 {
@@ -27,6 +28,11 @@ namespace DiagramCreator
         {
             InitializeComponent();
             
+            List<Func<double, double>> functions = new List<Func<double, double>>();
+
+            functions.Add(x => Pow(25 - Pow(x, 2), 0.5));
+            functions.Add(x => -Pow(25 - Pow(x, 2), 0.5));
+
             double thickness = 0.1;
             Brush brush = Brushes.Red;
             Brush markColor = Brushes.Black;
@@ -87,83 +93,29 @@ namespace DiagramCreator
                         new Point(0, height / 2),
                         new Point(width, height / 2)
                         ); // Ox
-
-                for (double x = -(width / 2); x < width / 2; x += calculationStep)
+                foreach (var function in functions)
                 {
-                    double x1 = x + width / 2;
-                    double x2 = x + calculationStep + width / 2;
+                    for (double x = -(width / 2); x < width / 2; x += calculationStep)
+                    {
+                        double x1 = x + width / 2;
+                        double x2 = x + calculationStep + width / 2;
 
-                    double y1 = height / 2 + function(x);
-                    double y2 = height / 2 + function(x + calculationStep);
-                    /*
-                    if(y1 > height)
-                    {
-                        y1 = height;
-                    }
-                    if (y2 > height)
-                    {
-                        y2 = height;
-                    }
-                    if(y1 < 0)
-                    {
-                        y1 = 0;
-                    }
-                    if(y2 < 0)
-                    { 
-                        y2 = 0; 
-                    }
-                    */
-                    /*
-                    if(y1 < height && y2 > height)
-                    {
-                        drawingContext.DrawLine(
-                            new Pen(brush, thickness),
-                            new Point(x1, y1),
-                            new Point(x2, height)
-                            );
-                    }
-                    else if (y1 > height && y2 < height)
-                    {
-                        drawingContext.DrawLine(
-                            new Pen(brush, thickness),
-                            new Point(x1, height),
-                            new Point(x2, y2)
-                            );
-                    }
-                    else if (y1 < 0 && y2 > 0)
-                    {
-                        drawingContext.DrawLine(
-                            new Pen(brush, thickness),
-                            new Point(x1, 0),
-                            new Point(x2, y2)
-                            );
-                    }
-                    else if (y1 > 0 && y2 < 0)
-                    {
-                        drawingContext.DrawLine(
-                            new Pen(brush, thickness),
-                            new Point(x1, y1),
-                            new Point(x2, 0)
-                            );
-                    }
-                    else */
-                    if (y1 <= height && y1 >= 0 && y2 <= height && y2 >= 0)
-                    {
-                        drawingContext.DrawLine(
-                            new Pen(brush, thickness),
-                            new Point(x1, y1),
-                            new Point(x2, y2)
-                            );
+                        double y1 = height / 2 + (function(x) * -1);
+                        double y2 = height / 2 + (function(x + calculationStep) * -1);
+
+                        if (y1 <= height && y1 >= 0 && y2 <= height && y2 >= 0)
+                        {
+                            drawingContext.DrawLine(
+                                new Pen(brush, thickness),
+                                new Point(x1, y1),
+                                new Point(x2, y2)
+                                );
+                        }
                     }
                 }
             }
             var image = new DrawingImage(visual.Drawing);
             img.Source = image;
-        }
-
-        public double function(double x)
-        {
-            return (Math.Sin(x)) * -1; //в круглые скобки написать формулу
         }
     }
 }
