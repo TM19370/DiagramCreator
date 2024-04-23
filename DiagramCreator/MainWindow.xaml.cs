@@ -28,13 +28,14 @@ namespace DiagramCreator
         {
             InitializeComponent();
             
-            List<Func<double, double>> functions = new List<Func<double, double>>();
+            List<Func<double, double>> functions = new List<Func<double, double>>() 
+            {
+                x => Pow(25 - Pow(x, 2), 0.5),
+                x => -Pow(25 - Pow(x, 2), 0.5)
+            };
 
-            functions.Add(x => Pow(25 - Pow(x, 2), 0.5));
-            functions.Add(x => -Pow(25 - Pow(x, 2), 0.5));
-
+            Random random = new Random();
             double thickness = 0.1;
-            Brush brush = Brushes.Red;
             Brush markColor = Brushes.Black;
             Brush backgroungMarksColor = Brushes.LightGray;
             double fontSize = 0.4;
@@ -64,11 +65,11 @@ namespace DiagramCreator
                         );
 
                     drawingContext.DrawText(
-                        new FormattedText((-width / 2 + i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), fontSize, markColor),
+                        new FormattedText((-width / 2 + i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(""), fontSize, markColor),
                         new Point(i, height / 2 + 0.1 + markThickness) 
                         );
                     drawingContext.DrawText(
-                        new FormattedText((height / 2 - i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("ss"), fontSize, markColor),
+                        new FormattedText((height / 2 - i).ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface(""), fontSize, markColor),
                         new Point(width / 2 + 0.1 + markThickness, i)
                         );
                     drawingContext.DrawLine(
@@ -93,8 +94,11 @@ namespace DiagramCreator
                         new Point(0, height / 2),
                         new Point(width, height / 2)
                         ); // Ox
+
                 foreach (var function in functions)
                 {
+                    Brush brush = new SolidColorBrush(Color.FromArgb(255, (byte)random.Next(50, 255), (byte)random.Next(50, 255), (byte)random.Next(50, 255))); 
+
                     for (double x = -(width / 2); x < width / 2; x += calculationStep)
                     {
                         double x1 = x + width / 2;
